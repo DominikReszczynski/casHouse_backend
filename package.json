@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^6.0.0"
+    "mongoose": "^6.13.5"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

@@ -45,7 +45,7 @@ mongoose.set("strictQuery", true); // lub false, w zależności od tego, co chce
 // Reszta twojego kodu...
 
 mongoose
-  .connect("mongodb://localhost:27017/casHouse", {
+  .connect("mongodb://localhost:27017/cas_house", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
