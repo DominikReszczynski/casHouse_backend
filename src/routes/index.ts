@@ -10,5 +10,6 @@ router.get("/hello", test.test);
 // ! ########################################
 
 router.post("/expanse/add", expanse.addExpanse);
-
+router.post("/expanse/getAnyExpansesByUserId", expanse.getExpansesByAuthor);
+router.delete("/expanse/removeExpanse", expanse.removeExpanse);
 module.exports = router;

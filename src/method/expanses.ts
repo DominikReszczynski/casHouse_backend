@@ -2,24 +2,56 @@ import mongoose from "mongoose";
 import Expanse from "../models/expanse";
 
 var expansesFunctions = {
-  addExpanse(req: any, res: any) {
+  async addExpanse(req: any, res: any) {
     console.log("zaczynam dodawać");
     try {
-      console.log(1);
       let expanseId = new mongoose.Types.ObjectId();
-      console.log(req.body);
       let newExpanse = new Expanse(req.body.expanse);
-      console.log(3);
       newExpanse._id = expanseId;
-      console.log(4);
       let authorId = newExpanse.authorId;
       newExpanse.authorId = new mongoose.Types.ObjectId(authorId);
-      console.log(5);
 
-      newExpanse.save();
-      console.log(6);
+      await newExpanse.save();
       newExpanse = newExpanse.toObject();
       return res.status(200).send({ success: true, expanse: newExpanse });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({ success: false });
+    }
+  },
+
+  async removeExpanse(req: any, res: any) {
+    console.log("zaczynam removeExpanse");
+    console.log(req.body.expanseId);
+    try {
+      const expanseId = new mongoose.Types.ObjectId(req.body.expanseId);
+
+      // Poczekaj na zakończenie operacji usuwania
+      const result = await Expanse.findByIdAndRemove(expanseId);
+
+      // Sprawdź, czy element został usunięty
+      if (!result) {
+        return res
+          .status(404)
+          .send({ success: false, message: "Expanse not found" });
+      }
+
+      return res.status(200).send({ success: true });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({ success: false });
+    }
+  },
+
+  async getExpansesByAuthor(req: any, res: any) {
+    console.log("Pobieram wydatki dla autora o ID 6459f367dff5d419539cbd41");
+    try {
+      const authorId = new mongoose.Types.ObjectId("6459f367dff5d419539cbd41");
+
+      // Pobieranie wydatków z bazy
+      const expanses = await Expanse.find({ authorId: authorId });
+
+      return res.status(200).send({ success: true, expanses });
     } catch (e) {
       console.log(e);
       return res.status(500).send({ success: false });
