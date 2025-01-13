@@ -8,6 +8,8 @@
     "dev": "nodemon ./src/server.ts"
   },
   "dependencies": {
+    "cohere-ai": "^7.15.2",
+    "dotenv": "^16.4.7",
     "express": "^4.17.1",
     "mongoose": "^6.13.5"
   },
