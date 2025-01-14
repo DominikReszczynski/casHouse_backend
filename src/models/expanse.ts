@@ -8,6 +8,8 @@ export interface IExpanse extends Document {
   currency: string;
   placeOfPurchase?: string;
   category: string;
+  createdAt?: Date; 
+  updatedAt?: Date;
 }
 
 const expanseSchema: Schema = new mongoose.Schema(

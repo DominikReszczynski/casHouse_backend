@@ -11,7 +11,20 @@ router.get("/hello", test.test);
 // ! ########################################
 
 router.post("/expanse/add", expanse.addExpanse);
-router.post("/expanse/getAnyExpansesByUserId", expanse.getExpansesByAuthor);
+router.post("/expanse/getAnyExpansesByUserId", expanse.getAllExpansesByAuthor);
+router.post(
+  "/expanse/getAllExpansesByAuthorExcludingCurrentMonth",
+  expanse.getExpansesGroupedByMonth
+);
+router.post(
+  "/expanse/getExpansesByAuthorForCurrentMonth",
+  expanse.getExpansesByAuthorForCurrentMonth
+);
+router.post(
+    "/expanse/getExpensesGroupedByCategory",
+    expanse.getExpensesGroupedByCategory
+  );
 router.delete("/expanse/removeExpanse", expanse.removeExpanse);
+
 router.post("/dashboard/chat", dashboard.chatWithCohere);
 module.exports = router;
