@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Expanse, { IExpanse } from "../models/expanse";
 import moment from "moment";
+import dayjs from "dayjs";
 
 var expansesFunctions = {
   async addExpanse(req: any, res: any) {
@@ -169,7 +170,6 @@ var expansesFunctions = {
       const { authorId, monthYear }: { authorId: string; monthYear: string } =
         req.body;
 
-      // Walidacja parametrów
       if (!authorId || !monthYear) {
         return res.status(400).send({
           success: false,
@@ -178,7 +178,6 @@ var expansesFunctions = {
       }
 
       const [year, month] = monthYear.split("-");
-
       if (!year || !month || isNaN(Number(year)) || isNaN(Number(month))) {
         return res.status(400).send({
           success: false,
@@ -186,18 +185,28 @@ var expansesFunctions = {
         });
       }
 
+      const startOfMonth = dayjs(`${year}-${month}-01`)
+        .startOf("month")
+        .toDate();
+      const endOfMonth = dayjs(`${year}-${month}-01`).endOf("month").toDate();
+
+      if (isNaN(startOfMonth.getTime()) || isNaN(endOfMonth.getTime())) {
+        return res.status(400).send({
+          success: false,
+          message: "Nieprawidłowy zakres dat.",
+        });
+      }
+
       const authorObjectId = new mongoose.Types.ObjectId(authorId);
 
-      // Pobranie wydatków z określonego miesiąca
       const expenses: IExpanse[] = await Expanse.find({
         authorId: authorObjectId,
         createdAt: {
-          $gte: new Date(`${year}-${month}-01T00:00:00.000Z`),
-          $lt: new Date(`${year}-${month}-31T23:59:59.999Z`),
+          $gte: startOfMonth,
+          $lt: endOfMonth,
         },
       });
 
-      // Grupowanie wydatków według kategorii i sumowanie
       const groupedByCategory: Record<string, number> = expenses.reduce(
         (acc: Record<string, number>, expanse: IExpanse) => {
           const category = expanse.category;
@@ -215,7 +224,7 @@ var expansesFunctions = {
 
       console.log(groupedByCategory);
 
-      return res.status(200).send({ success: true, groupedByCategory: groupedByCategory });
+      return res.status(200).send({ success: true, groupedByCategory });
     } catch (error) {
       console.error("Błąd podczas grupowania wydatków:", error);
       return res.status(500).send({
