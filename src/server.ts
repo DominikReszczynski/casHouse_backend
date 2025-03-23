@@ -41,9 +41,7 @@ app.use(
 );
 
 // Ustawienie opcji strictQuery
-mongoose.set("strictQuery", true); // lub false, w zależności od tego, co chcesz osiągnąć
-
-// Reszta twojego kodu...
+mongoose.set("strictQuery", true);
 
 mongoose
   .connect("mongodb://localhost:27017/cas_house", {
@@ -53,8 +51,8 @@ mongoose
   .then(() => console.log("Połączono z MongoDB"))
   .catch((err: any) => console.error("Błąd połączenia z MongoDB:", err));
 
-// Użyj tras
-app.use(routes); // Upewnij się, że routes to router
+// Użycie tras
+app.use(routes);
 
 app.listen(port, () => {
   console.log(`Serwer działa na porcie ${port}`);

@@ -43,9 +43,9 @@ var expansesFunctions = {
   },
 
   async getAllExpansesByAuthor(req: any, res: any) {
-    console.log("Pobieram wydatki dla autora o ID 6459f367dff5d419539cbd41");
+    console.log(`Pobieram wydatki dla autora o ID ${req.body.authorId}`);
     try {
-      const authorId = new mongoose.Types.ObjectId("6459f367dff5d419539cbd41");
+      const authorId = new mongoose.Types.ObjectId(req.body.authorId);
 
       // Pobieranie wydatków z bazy
       const expanses = await Expanse.find({ authorId: authorId });
@@ -58,9 +58,9 @@ var expansesFunctions = {
   },
 
   async getAllExpansesByAuthorExcludingCurrentMonth(req: any, res: any) {
-    console.log("Pobieram wydatki dla autora o ID 6459f367dff5d419539cbd41");
+    console.log(`Pobieram wydatki dla autora o ID ${req.body.authorId}`);
     try {
-      const authorId = new mongoose.Types.ObjectId("6459f367dff5d419539cbd41");
+      const authorId = new mongoose.Types.ObjectId(req.body.authorId);
 
       const now = moment();
       const startOfMonth = now.startOf("month").toDate();
@@ -83,10 +83,10 @@ var expansesFunctions = {
 
   async getExpansesGroupedByMonth(req: any, res: any) {
     console.log(
-      "Pobieram i grupuję wydatki dla autora o ID 6459f367dff5d419539cbd41 bez wydatków z bieżącego miesiąca"
+      `Pobieram i grupuję wydatki dla autora o ID ${req.body.authorId} bez wydatków z bieżącego miesiąca`
     );
     try {
-      const authorId = new mongoose.Types.ObjectId("6459f367dff5d419539cbd41");
+      const authorId = new mongoose.Types.ObjectId(req.body.authorId);
 
       const expanses = await Expanse.find({ authorId: authorId });
 
@@ -132,10 +132,10 @@ var expansesFunctions = {
   },
 
   async getExpansesByAuthorForCurrentMonth(req: any, res: any) {
-    console.log("Pobieram wydatki dla autora o ID 6459f367dff5d419539cbd41");
+    console.log(`Pobieram wydatki dla autora o ID ${req.body.authorId}`);
 
     try {
-      const authorId = new mongoose.Types.ObjectId("6459f367dff5d419539cbd41");
+      const authorId = new mongoose.Types.ObjectId(req.body.authorId);
 
       const now = moment();
       const startOfMonth = now.startOf("month").toDate();

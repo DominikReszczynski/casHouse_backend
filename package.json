@@ -4,7 +4,7 @@
   "description": "Backend dla aplikacji mobilnej",
   "main": "./src/server.ts",
   "scripts": {
-    "start": "node ./src/server.ts",
+    "start": "ts-node ./src/server.ts",
     "dev": "nodemon ./src/server.ts"
   },
   "dependencies": {
@@ -17,9 +17,9 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/node": "^22.8.6",
+    "@types/node": "^22.13.11",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.8.2"
   }
 }

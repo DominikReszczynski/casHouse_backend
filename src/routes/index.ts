@@ -1,9 +1,9 @@
-import express from "express"; // Importuj express
-const router = express.Router(); // Utwórz router
+import express from "express";
+const router = express.Router();
 const test = require("./../method/test");
 const expanse = require("./../method/expanses");
 const dashboard = require("./../method/dashboard");
-// Definiuj trasę API
+const user = require("./../method/user");
 router.get("/hello", test.test);
 
 // ! ########################################
@@ -21,10 +21,22 @@ router.post(
   expanse.getExpansesByAuthorForCurrentMonth
 );
 router.post(
-    "/expanse/getExpensesGroupedByCategory",
-    expanse.getExpensesGroupedByCategory
-  );
+  "/expanse/getExpensesGroupedByCategory",
+  expanse.getExpensesGroupedByCategory
+);
 router.delete("/expanse/removeExpanse", expanse.removeExpanse);
 
+// ! ########################################
+// ! ############ - DASHBOARD - ##############
+// ! ########################################
+
 router.post("/dashboard/chat", dashboard.chatWithCohere);
+
+// ! ########################################
+// ! ############ - USER - ##############
+// ! ########################################
+
+router.post("/user/login", user.login);
+router.post("/user/registration", user.registration);
+
 module.exports = router;
